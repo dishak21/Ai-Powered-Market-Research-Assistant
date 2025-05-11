@@ -1,101 +1,136 @@
-📊 AI-Powered Market Research Assistant
-Overview
-This project presents a robust AI-based pipeline for automated industry report generation, designed to meet high standards of factual accuracy, structural integrity, and consistency. The system leverages multiple large language models (LLMs) in a multi-prompt, multi-model workflow to produce reports that adhere strictly to Wikipedia-sourced information.
+# 🤖 AI-Powered Market Research Assistant
 
-🔧 How It Works
-⚙️ Multi-Prompt Pipeline
-The assistant follows a three-stage prompt structure:
+## 📌 Overview
+The **Market Research Assistant** is a multi-model AI system designed to automate the generation of structured, accurate, and verifiable industry reports. Built for the UCL module *Machine Learning for Business (MSIN0231)*, the assistant uses **Wikipedia as the sole source of truth**, ensuring factual grounding and reduced hallucination.
 
-Generation Prompt:
-Claude (or other LLMs) generates a report based on predefined JSON structure and Wikipedia sourcing rules.
+---
 
-Evaluation Prompt:
-OpenAI (GPT-4) acts as a quality control evaluator, reviewing the output on six key metrics:
+## ⚙️ Workflow Architecture
 
-Wikipedia Similarity (0–1)
+### 🔁 Three-Prompt Pipeline
+1. **Generation Prompt**:  
+   Claude generates the initial industry report using a strict JSON schema, Wikipedia-only sourcing, and a word limit of 600.
 
-Number of Wikipedia References
+2. **Evaluation Prompt**:  
+   GPT-4 evaluates Claude's output using six metrics:
+   - Wikipedia Similarity (MiniLM embeddings)
+   - Reference Count
+   - Hallucinated Facts
+   - JSON Validity
+   - Structural Completeness
+   - Word Count
 
-Count of Hallucinated Facts
+3. **Refinement Prompt**:  
+   Claude receives feedback from GPT-4 and refines the report to resolve issues. The loop continues until strict thresholds are met.
 
-Valid JSON Structure (Yes/No)
+---
 
-Structural Consistency (Yes/No)
+## 📐 JSON Report Structure
 
-Word Count
+Each report contains 12 key sections:
+1. Industry Overview  
+2. Market Analysis  
+3. Key Products & Services  
+4. Geographical Distribution  
+5. Key Players  
+6. Regulatory Landscape  
+7. Technological Innovations  
+8. Market Trends  
+9. Opportunities  
+10. Challenges  
+11. Future Outlook  
+12. References  
 
-Refinement Prompt:
-Claude receives the evaluation results and is prompted to refine the report, resolving all flagged issues.
+---
 
-This cycle repeats until the report meets defined thresholds (e.g., ≥0.85 similarity, ≤1 hallucination).
+## 📊 Evaluation Metrics
 
-🧠 Model Roles
-Claude:
-Generates and refines the initial report.
+| Metric                  | Description                                           |
+|------------------------|-------------------------------------------------------|
+| Wikipedia Similarity   | Semantic alignment with Wikipedia (MiniLM)           |
+| Reference Count        | Number of valid Wikipedia citations                  |
+| Hallucination Count    | Number of fabricated claims                          |
+| JSON Validity          | Structural correctness of output                     |
+| Structural Completeness| Presence of all required sections                    |
+| Word Count             | Must not exceed 600 words                            |
 
-OpenAI GPT-4:
-Critically evaluates outputs for factual and structural accuracy.
+📈 **Overall Score** = Similarity + Reference Count − Hallucinated Facts
 
-This division of labor creates a high-performing pipeline where no single model is relied on for everything.
+---
 
-📈 Evaluation Strategy
-Each model is benchmarked across multiple industries (e.g., Energy, Fashion, Finance, Healthcare, Aerospace) using objective and reproducible metrics:
+## 🧪 Models Evaluated
 
-Validity (JSON parsability)
+- ✅ **OpenAI GPT-4**: Best accuracy and structure
+- ✅ **Anthropic Claude**: Strong second-best for generation & refinement
+- ❌ **Google Gemini**: Eliminated due to JSON flaws and high hallucination rates
 
-Completeness (all 12 sections present)
+---
 
-Semantic similarity to Wikipedia
+## 🛠 Features
 
-Citation quality
+- **Fully automated generation pipeline**
+- **Dynamic multi-model collaboration**
+- **Quantitative scoring and benchmarking**
+- **Hallucination rate reduced from 40% → <5%**
+- **Industry-specific model switching**
+- **Strict Wikipedia sourcing**
 
-Hallucination detection
+---
 
-Based on these, OpenAI consistently performed best, with Claude as the runner-up. Gemini was eliminated due to structural and factual issues.
+## 📝 Sample Industries Covered
 
-🔬 Key Innovations
-Dynamic Model Collaboration: Each model’s strengths are used strategically.
+- Aerospace & Defence  
+- Fashion & Apparel  
+- Financial Services  
+- Healthcare Technology  
+- Renewable Energy
 
-Quantitative Evaluation Framework: Six concrete metrics for ranking model outputs.
+Each report is refined until it meets criteria:
+- Similarity ≥ 0.85  
+- Reference Count ≥ 1  
+- Hallucinated Facts ≤ 1  
 
-Automated Refinement Loop: Refinement based on structured JSON feedback.
+---
 
-Wikipedia-Based Ground Truth: Reduces hallucination rate from 40% → under 5%.
+## 🧱 Limitations & Learnings
 
-🧪 Sample Use Cases
-Competitive intelligence and industry benchmarking
+### ❌ What Didn't Work
+- Single-model prompting led to high hallucination
+- Post-generation fact-checking was time-consuming
+- Gemini's outputs lacked structural integrity
 
-Rapid internal briefings and executive summaries
+### ✅ What Worked
+- Three-step feedback loop between Claude and GPT-4
+- Wikipedia-based similarity scoring
+- Iterative refinement until quality met
 
-Automated report generation for sales, product, or market teams
+---
 
-🛠 Future Enhancements
-Integrate financial APIs (e.g., Yahoo Finance, Bloomberg) for richer insights
+## 🚀 Future Enhancements
 
-Add live scraping of filings and reports
+- Integrate financial APIs (e.g. Yahoo Finance, Bloomberg)
+- Add web scraping for corporate filings
+- Use ML-based refinement learning from past feedback
+- Enable AWS/Azure cloud scaling for batch report generation
+- Implement RBAC and GDPR compliance for enterprise use
 
-Use ML-based refinement to reduce iteration cycles
+---
 
-Enable multi-threaded cloud deployment (AWS/Azure)
+## 📚 Source of Truth
 
-Implement RBAC and encryption for enterprise-grade security
+All facts are **strictly sourced from Wikipedia**. The system rejects unverifiable content, ensuring high factual integrity and replicability across use cases.
 
-📁 Output Format
-Each report follows a 12-section JSON schema, including:
+---
 
-Industry Overview
+## 📂 File Outputs
 
-Market Size & Growth
+Reports are delivered in:
+- Structured JSON (machine-readable)
+- Markdown/PDF for presentation
+- Logs of evaluation scores for each model
 
-Key Players
+---
 
-Regulatory Landscape
+## 💬 Contact
 
-Market Trends
-
-Future Outlook
-...and more.
-
-📚 Source of Truth
-All factual claims are backed by Wikipedia. Reports must cite Wikipedia and structurally align with verified data — ensuring high factual integrity and reproducibility.
-
+*Let’s connect if you're interested in scalable, trustworthy AI for industry insights.*
